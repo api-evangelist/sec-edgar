@@ -1,0 +1,19 @@
+aid: sec-edgar
+url: https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/apis.yml
+apis:
+- aid: sec-edgar:sec-edgar-api
+  name: SEC EDGAR Company Filings API
+  tags:
+  - Finance
+  - Regulatory
+  - XBRL
+  - SEC
+  - Filings
+  image: https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/image.png
+  humanURL: https://www.sec.gov/developer
+  baseURL: https://efts.sec.gov
+  properties:
+  - url: https://www.sec.gov/developer
+    type: Documentation
+  description: >-
+    The SEC EDGAR (Electronic Data Gathering, Analysis, and Retrieval) system provides REST APIs for accessing company filings, XBRL financial data, and full-text search across SEC submissions. APIs deliver 10-K, 10-Q, 8-K, and other filing data in JSON, XML, and XBRL formats.
