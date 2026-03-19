@@ -15,6 +15,8 @@ apis:
   properties:
   - url: https://efts.sec.gov/LATEST/search-index
     type: Documentation
+  - url: openapi/sec-edgar-submissions-openapi.yml
+    type: OpenAPI
   description: >-
     The SEC EDGAR Full-Text Search API (EFTS) allows searching the full text of all EDGAR filings. Supports keyword search, date range filtering, form type filtering, and entity-based queries returning metadata for matching filings.
 
@@ -33,6 +35,8 @@ apis:
     type: Documentation
   - url: https://www.sec.gov/developer
     type: Reference
+  - url: openapi/sec-edgar-submissions-openapi.yml
+    type: OpenAPI
   description: >-
     The SEC EDGAR Submissions API returns all company filing metadata (10-K, 10-Q, 8-K, etc.) in JSON format for a given CIK number. Returns recent and historical submission data including form type, filing date, accession numbers, and document indexes.
 
@@ -52,6 +56,8 @@ apis:
     type: Documentation
   - url: https://www.sec.gov/developer
     type: Reference
+  - url: openapi/sec-edgar-submissions-openapi.yml
+    type: OpenAPI
   description: >-
     The SEC EDGAR XBRL Company Facts API delivers structured financial data extracted from XBRL-tagged filings. Returns all reported facts for a company including income statement, balance sheet, and cash flow data in JSON format organized by taxonomy concept.
 
@@ -85,6 +91,12 @@ common:
   type: PrivacyPolicy
 - url: https://www.sec.gov/
   type: Website
+- url: json-schema/sec-edgar-filing-schema.json
+  type: JSONSchema
+- url: json-schema/sec-edgar-company-schema.json
+  type: JSONSchema
+- url: json-ld/sec-edgar-context.jsonld
+  type: JSONLDContext
 
 maintainers:
 - name: Kin Lane

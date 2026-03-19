@@ -1,0 +1,617 @@
+openapi: 3.1.0
+info:
+  title: SEC EDGAR Submissions & XBRL API
+  description: >-
+    The SEC EDGAR data APIs provide free, authenticated-free access to company
+    filing metadata, XBRL financial data, and full-text search across all SEC
+    submissions. APIs are hosted at data.sec.gov and efts.sec.gov and require
+    a descriptive User-Agent header per SEC fair-access policy.
+  version: 1.0.0
+  contact:
+    name: SEC Developer Resources
+    url: https://www.sec.gov/developer
+  license:
+    name: Public Domain (U.S. Government Work)
+    url: https://www.sec.gov/privacy.htm
+servers:
+  - url: https://data.sec.gov
+    description: SEC EDGAR Data API
+  - url: https://efts.sec.gov
+    description: SEC EDGAR Full-Text Search
+
+tags:
+  - name: Submissions
+    description: Company filing submission history
+  - name: XBRL
+    description: Structured XBRL financial data
+  - name: Full-Text Search
+    description: Full-text search across all EDGAR filings
+  - name: Company Facts
+    description: Aggregated company financial facts
+
+paths:
+  /submissions/CIK{cik}.json:
+    get:
+      operationId: getCompanySubmissions
+      summary: Get company filing submission history
+      description: >-
+        Returns all filing metadata for a company identified by CIK (Central Index Key).
+        Includes recent filings inline and older filings referenced in separate data files.
+        Contains company metadata, SIC code, fiscal year end, and filing history.
+      tags:
+        - Submissions
+      parameters:
+        - name: cik
+          in: path
+          required: true
+          description: >-
+            10-digit Central Index Key (CIK) with leading zeros.
+            Example: 0000320193 for Apple Inc.
+          schema:
+            type: string
+            pattern: '^\d{10}$'
+          example: "0000320193"
+      responses:
+        '200':
+          description: Company submissions data
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanySubmissions'
+        '404':
+          description: Company CIK not found
+        '429':
+          description: Rate limit exceeded — max 10 requests/second
+
+  /api/xbrl/companyfacts/CIK{cik}.json:
+    get:
+      operationId: getCompanyFacts
+      summary: Get all XBRL facts for a company
+      description: >-
+        Returns all structured financial data reported in XBRL-tagged SEC filings
+        for a company. Covers all US-GAAP and DEI taxonomy concepts across all
+        filings. Data is organized by concept with historical values per period.
+      tags:
+        - XBRL
+        - Company Facts
+      parameters:
+        - name: cik
+          in: path
+          required: true
+          description: 10-digit CIK with leading zeros
+          schema:
+            type: string
+            pattern: '^\d{10}$'
+          example: "0000320193"
+      responses:
+        '200':
+          description: All XBRL company facts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyFacts'
+        '404':
+          description: Company not found
+
+  /api/xbrl/companyconcept/CIK{cik}/{taxonomy}/{concept}.json:
+    get:
+      operationId: getCompanyConcept
+      summary: Get a single XBRL concept for a company
+      description: >-
+        Returns all historical values reported for a specific XBRL concept by a
+        company. For example, retrieve all reported values of AccountsPayableCurrent
+        from the us-gaap taxonomy across all filings.
+      tags:
+        - XBRL
+      parameters:
+        - name: cik
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{10}$'
+          example: "0000320193"
+        - name: taxonomy
+          in: path
+          required: true
+          description: XBRL taxonomy namespace
+          schema:
+            type: string
+            enum: [us-gaap, ifrs-full, dei, srt]
+          example: "us-gaap"
+        - name: concept
+          in: path
+          required: true
+          description: XBRL concept name (camelCase)
+          schema:
+            type: string
+          example: "AccountsPayableCurrent"
+      responses:
+        '200':
+          description: Historical values for the specified concept
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyConcept'
+        '404':
+          description: Company or concept not found
+
+  /api/xbrl/frames/{taxonomy}/{concept}/{unit}/{period}.json:
+    get:
+      operationId: getXBRLFrames
+      summary: Get all company values for a concept in a period
+      description: >-
+        Returns values for a given XBRL concept across all companies for a specific
+        period. Useful for cross-company financial data comparisons and benchmarking.
+      tags:
+        - XBRL
+      parameters:
+        - name: taxonomy
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [us-gaap, ifrs-full, dei, srt]
+          example: "us-gaap"
+        - name: concept
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "AccountsPayableCurrent"
+        - name: unit
+          in: path
+          required: true
+          description: Unit of measure (USD, shares, pure)
+          schema:
+            type: string
+          example: "USD"
+        - name: period
+          in: path
+          required: true
+          description: >-
+            Period identifier. For annual instant: CY{year}Q{quarter}I.
+            For annual duration: CY{year}.
+          schema:
+            type: string
+          example: "CY2023Q4I"
+      responses:
+        '200':
+          description: Cross-company values for the concept
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XBRLFrames'
+
+  /LATEST/search-index:
+    get:
+      operationId: fullTextSearch
+      summary: Full-text search across EDGAR filings
+      description: >-
+        Searches the full text of all EDGAR filings submitted since 2001.
+        Supports keyword search, form type filtering, date ranges, and entity-based
+        queries. Returns filing metadata and snippets.
+      tags:
+        - Full-Text Search
+      servers:
+        - url: https://efts.sec.gov
+      parameters:
+        - name: q
+          in: query
+          required: false
+          description: Full-text search query (Elasticsearch query string syntax)
+          schema:
+            type: string
+          example: "\"material weakness\" AND \"internal controls\""
+        - name: dateRange
+          in: query
+          required: false
+          description: Date range filter
+          schema:
+            type: string
+            enum: [custom]
+          example: "custom"
+        - name: startdt
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          example: "2024-01-01"
+        - name: enddt
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          example: "2025-12-31"
+        - name: forms
+          in: query
+          required: false
+          description: Comma-separated list of form types to filter
+          schema:
+            type: string
+          example: "10-K,10-Q"
+        - name: entity
+          in: query
+          required: false
+          description: Company name search filter
+          schema:
+            type: string
+          example: "Apple Inc"
+        - name: _source
+          in: query
+          required: false
+          description: Response fields to include
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: false
+          description: Pagination offset
+          schema:
+            type: integer
+            default: 0
+        - name: hits.hits.total.value
+          in: query
+          required: false
+          description: Maximum results to return
+          schema:
+            type: integer
+            default: 10
+            maximum: 10
+      responses:
+        '200':
+          description: Full-text search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResults'
+
+components:
+  schemas:
+    CompanySubmissions:
+      type: object
+      description: Complete submission history for a company
+      properties:
+        cik:
+          type: string
+          description: Company CIK (without leading zeros as string)
+        entityType:
+          type: string
+          example: "operating"
+        sic:
+          type: string
+          description: Standard Industrial Classification code
+          example: "7372"
+        sicDescription:
+          type: string
+          example: "Prepackaged Software"
+        name:
+          type: string
+          example: "Apple Inc."
+        tickers:
+          type: array
+          items:
+            type: string
+          example: ["AAPL"]
+        exchanges:
+          type: array
+          items:
+            type: string
+          example: ["Nasdaq"]
+        ein:
+          type: string
+          description: Employer Identification Number
+        description:
+          type: string
+        website:
+          type: string
+          format: uri
+        investorWebsite:
+          type: string
+          format: uri
+        category:
+          type: string
+        fiscalYearEnd:
+          type: string
+          description: Fiscal year end as MMDD
+          example: "0930"
+        stateOfIncorporation:
+          type: string
+        stateOfIncorporationDescription:
+          type: string
+        addresses:
+          type: object
+          properties:
+            mailing:
+              $ref: '#/components/schemas/CompanyAddress'
+            business:
+              $ref: '#/components/schemas/CompanyAddress'
+        filings:
+          type: object
+          properties:
+            recent:
+              $ref: '#/components/schemas/FilingHistory'
+            files:
+              type: array
+              description: References to additional paginated filing data files
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  filingCount:
+                    type: integer
+                  filingFrom:
+                    type: string
+                    format: date
+                  filingTo:
+                    type: string
+                    format: date
+
+    CompanyAddress:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        stateOrCountry:
+          type: string
+        zipCode:
+          type: string
+        stateOrCountryDescription:
+          type: string
+
+    FilingHistory:
+      type: object
+      description: Arrays of parallel filing metadata fields
+      properties:
+        accessionNumber:
+          type: array
+          items:
+            type: string
+          description: Filing accession numbers (XXXXXXXXXX-YY-ZZZZZZ format)
+        filingDate:
+          type: array
+          items:
+            type: string
+            format: date
+        reportDate:
+          type: array
+          items:
+            type: string
+            format: date
+        acceptanceDateTime:
+          type: array
+          items:
+            type: string
+            format: date-time
+        act:
+          type: array
+          items:
+            type: string
+        form:
+          type: array
+          items:
+            type: string
+          description: SEC form type (10-K, 10-Q, 8-K, etc.)
+        fileNumber:
+          type: array
+          items:
+            type: string
+        filmNumber:
+          type: array
+          items:
+            type: string
+        items:
+          type: array
+          items:
+            type: string
+        size:
+          type: array
+          items:
+            type: integer
+          description: Filing size in bytes
+        isXBRL:
+          type: array
+          items:
+            type: integer
+          description: 1 if XBRL tagged, 0 otherwise
+        isInlineXBRL:
+          type: array
+          items:
+            type: integer
+        primaryDocument:
+          type: array
+          items:
+            type: string
+        primaryDocDescription:
+          type: array
+          items:
+            type: string
+
+    CompanyFacts:
+      type: object
+      properties:
+        cik:
+          type: integer
+        entityName:
+          type: string
+        facts:
+          type: object
+          description: Nested object of taxonomy > concept > unit > data
+          additionalProperties:
+            type: object
+            description: Taxonomy namespace (e.g., us-gaap, dei)
+            additionalProperties:
+              type: object
+              description: XBRL concept
+              properties:
+                label:
+                  type: string
+                description:
+                  type: string
+                units:
+                  type: object
+                  additionalProperties:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/XBRLFact'
+
+    CompanyConcept:
+      type: object
+      properties:
+        cik:
+          type: integer
+        taxonomy:
+          type: string
+        tag:
+          type: string
+        label:
+          type: string
+        description:
+          type: string
+        entityName:
+          type: string
+        units:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/XBRLFact'
+
+    XBRLFact:
+      type: object
+      properties:
+        end:
+          type: string
+          format: date
+          description: Period end date for duration facts; instant date for point-in-time facts
+        val:
+          type: number
+          description: Reported value
+        accn:
+          type: string
+          description: Accession number of filing
+        fy:
+          type: integer
+          description: Fiscal year
+        fp:
+          type: string
+          description: Fiscal period (FY, Q1, Q2, Q3, Q4)
+        form:
+          type: string
+          description: Form type
+        filed:
+          type: string
+          format: date
+        frame:
+          type: string
+          description: XBRL frame identifier
+        start:
+          type: string
+          format: date
+          description: Period start date (for duration facts)
+
+    XBRLFrames:
+      type: object
+      properties:
+        taxonomy:
+          type: string
+        tag:
+          type: string
+        ccp:
+          type: string
+          description: Concept-currency-period identifier
+        uom:
+          type: string
+          description: Unit of measure
+        label:
+          type: string
+        description:
+          type: string
+        pts:
+          type: integer
+          description: Number of data points
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              accn:
+                type: string
+              cik:
+                type: integer
+              entityName:
+                type: string
+              loc:
+                type: string
+                description: Country/state code
+              end:
+                type: string
+                format: date
+              val:
+                type: number
+
+    SearchResults:
+      type: object
+      properties:
+        hits:
+          type: object
+          properties:
+            total:
+              type: object
+              properties:
+                value:
+                  type: integer
+                relation:
+                  type: string
+            hits:
+              type: array
+              items:
+                $ref: '#/components/schemas/SearchHit'
+
+    SearchHit:
+      type: object
+      properties:
+        _id:
+          type: string
+        _score:
+          type: number
+        _source:
+          type: object
+          properties:
+            period_of_report:
+              type: string
+            entity_name:
+              type: string
+            file_num:
+              type: string
+            biz_location:
+              type: string
+            inc_states:
+              type: string
+            form_type:
+              type: string
+            file_date:
+              type: string
+              format: date
+            accession_no:
+              type: string
+            display_date_filed:
+              type: string
+        highlight:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string

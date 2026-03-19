@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://data.sec.gov/schemas/company",
+  "title": "SEC EDGAR Company",
+  "description": "A registrant entity registered with the SEC in EDGAR",
+  "type": "object",
+  "properties": {
+    "cik": {
+      "type": "string",
+      "description": "Central Index Key — unique 10-digit identifier with leading zeros",
+      "pattern": "^\\d{10}$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Company/registrant name as filed with SEC"
+    },
+    "tickers": {
+      "type": "array",
+      "description": "Stock exchange ticker symbols",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exchanges": {
+      "type": "array",
+      "description": "Stock exchanges where listed",
+      "items": {
+        "type": "string",
+        "enum": ["NYSE", "Nasdaq", "NYSE MKT", "NYSE Arca", "OTC", "CBOE"]
+      }
+    },
+    "sic": {
+      "type": "string",
+      "description": "Standard Industrial Classification (SIC) code",
+      "pattern": "^\\d{4}$"
+    },
+    "sicDescription": {
+      "type": "string",
+      "description": "SIC industry description"
+    },
+    "ein": {
+      "type": "string",
+      "description": "Employer Identification Number (XX-XXXXXXX)",
+      "pattern": "^\\d{2}-\\d{7}$"
+    },
+    "entityType": {
+      "type": "string",
+      "enum": ["operating", "investment", "sab99", "special purpose"],
+      "description": "SEC entity type classification"
+    },
+    "fiscalYearEnd": {
+      "type": "string",
+      "description": "Fiscal year end as MMDD",
+      "pattern": "^\\d{4}$",
+      "examples": ["0930", "1231"]
+    },
+    "stateOfIncorporation": {
+      "type": "string",
+      "description": "US state or country code of incorporation"
+    },
+    "addresses": {
+      "type": "object",
+      "properties": {
+        "mailing": {
+          "$ref": "#/$defs/Address"
+        },
+        "business": {
+          "$ref": "#/$defs/Address"
+        }
+      }
+    },
+    "website": {
+      "type": "string",
+      "format": "uri"
+    },
+    "category": {
+      "type": "string",
+      "description": "SEC filer category",
+      "examples": [
+        "Large accelerated filer",
+        "Accelerated filer",
+        "Non-accelerated filer",
+        "Smaller reporting company"
+      ]
+    }
+  },
+  "required": ["cik", "name"],
+  "$defs": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "street1": {
+          "type": "string"
+        },
+        "street2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "stateOrCountry": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "stateOrCountryDescription": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

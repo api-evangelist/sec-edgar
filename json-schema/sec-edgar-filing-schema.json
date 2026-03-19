@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://data.sec.gov/schemas/filing",
+  "title": "SEC EDGAR Filing",
+  "description": "An SEC EDGAR filing submission record including metadata and document index",
+  "type": "object",
+  "properties": {
+    "accessionNumber": {
+      "type": "string",
+      "description": "Unique accession number in XXXXXXXXXX-YY-ZZZZZZ format",
+      "pattern": "^\\d{10}-\\d{2}-\\d{6}$",
+      "examples": ["0000320193-23-000106"]
+    },
+    "cik": {
+      "type": "string",
+      "description": "Central Index Key (10-digit with leading zeros)",
+      "pattern": "^\\d{10}$",
+      "examples": ["0000320193"]
+    },
+    "entityName": {
+      "type": "string",
+      "description": "Registrant entity name",
+      "examples": ["Apple Inc."]
+    },
+    "formType": {
+      "type": "string",
+      "description": "SEC form type",
+      "examples": ["10-K", "10-Q", "8-K", "DEF 14A", "S-1", "4", "SC 13G"]
+    },
+    "filingDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the filing was accepted by EDGAR"
+    },
+    "reportDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Period of report end date"
+    },
+    "acceptanceDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Exact date-time of acceptance by EDGAR"
+    },
+    "act": {
+      "type": "string",
+      "description": "Securities Act under which filed",
+      "examples": ["34", "33"]
+    },
+    "fileNumber": {
+      "type": "string",
+      "description": "SEC file number for the registrant"
+    },
+    "filmNumber": {
+      "type": "string",
+      "description": "Film number assigned to the filing"
+    },
+    "items": {
+      "type": "string",
+      "description": "Form 8-K item numbers (comma-separated)"
+    },
+    "size": {
+      "type": "integer",
+      "description": "Total filing size in bytes"
+    },
+    "isXBRL": {
+      "type": "boolean",
+      "description": "Whether filing includes XBRL data"
+    },
+    "isInlineXBRL": {
+      "type": "boolean",
+      "description": "Whether filing uses Inline XBRL (iXBRL)"
+    },
+    "primaryDocument": {
+      "type": "string",
+      "description": "Filename of the primary filing document"
+    },
+    "primaryDocDescription": {
+      "type": "string",
+      "description": "Description of the primary document"
+    },
+    "documents": {
+      "type": "array",
+      "description": "All documents included in the filing",
+      "items": {
+        "$ref": "#/$defs/FilingDocument"
+      }
+    },
+    "xbrlData": {
+      "$ref": "#/$defs/XBRLSummary"
+    }
+  },
+  "required": ["accessionNumber", "cik", "formType", "filingDate"],
+  "$defs": {
+    "FilingDocument": {
+      "type": "object",
+      "description": "A single document within a filing submission",
+      "properties": {
+        "sequence": {
+          "type": "integer",
+          "description": "Document sequence number"
+        },
+        "description": {
+          "type": "string",
+          "description": "Document description"
+        },
+        "documentName": {
+          "type": "string",
+          "description": "Filename of the document"
+        },
+        "documentType": {
+          "type": "string",
+          "description": "SEC document type code"
+        },
+        "size": {
+          "type": "integer",
+          "description": "Document size in bytes"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Full URL to document on EDGAR"
+        }
+      },
+      "required": ["documentName", "documentType"]
+    },
+    "XBRLSummary": {
+      "type": "object",
+      "description": "Summary of XBRL financial data in the filing",
+      "properties": {
+        "taxonomy": {
+          "type": "string",
+          "enum": ["us-gaap", "ifrs-full", "dei"],
+          "description": "Primary XBRL taxonomy used"
+        },
+        "concepts": {
+          "type": "array",
+          "description": "XBRL concept names reported",
+          "items": {
+            "type": "string"
+          }
+        },
+        "periodOfReport": {
+          "type": "string",
+          "format": "date",
+          "description": "End date of reporting period"
+        },
+        "fiscalYear": {
+          "type": "integer",
+          "description": "Fiscal year"
+        },
+        "fiscalPeriod": {
+          "type": "string",
+          "enum": ["FY", "Q1", "Q2", "Q3", "Q4"],
+          "description": "Fiscal period"
+        }
+      }
+    }
+  }
+}

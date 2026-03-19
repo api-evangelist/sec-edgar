@@ -1,0 +1,67 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "edgar": "https://data.sec.gov/vocab/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "xbrl": "https://xbrl.org/2003/instance/",
+
+    "Company": "schema:Organization",
+    "Filing": "schema:CreativeWork",
+    "FinancialReport": "schema:FinancialProduct",
+    "Person": "schema:Person",
+
+    "cik": "edgar:cik",
+    "name": "schema:name",
+    "tickers": "edgar:tickerSymbol",
+    "exchanges": "edgar:listedExchange",
+    "sic": "edgar:sicCode",
+    "sicDescription": "edgar:sicDescription",
+    "ein": "schema:taxID",
+    "fiscalYearEnd": "edgar:fiscalYearEnd",
+    "website": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "addresses": "schema:address",
+    "stateOfIncorporation": "schema:addressRegion",
+
+    "accessionNumber": "edgar:accessionNumber",
+    "formType": "edgar:formType",
+    "filingDate": {
+      "@id": "schema:datePublished",
+      "@type": "xsd:date"
+    },
+    "reportDate": {
+      "@id": "edgar:periodOfReport",
+      "@type": "xsd:date"
+    },
+    "acceptanceDateTime": {
+      "@id": "edgar:acceptanceDateTime",
+      "@type": "xsd:dateTime"
+    },
+    "size": "schema:fileSize",
+    "isXBRL": "edgar:isXBRL",
+    "primaryDocument": "schema:url",
+    "documents": "schema:hasPart",
+
+    "taxonomy": "xbrl:taxonomy",
+    "concept": "xbrl:concept",
+    "fiscalYear": "edgar:fiscalYear",
+    "fiscalPeriod": "edgar:fiscalPeriod",
+    "val": "edgar:reportedValue",
+    "end": {
+      "@id": "edgar:periodEnd",
+      "@type": "xsd:date"
+    },
+    "start": {
+      "@id": "edgar:periodStart",
+      "@type": "xsd:date"
+    },
+
+    "street1": "schema:streetAddress",
+    "city": "schema:addressLocality",
+    "stateOrCountry": "schema:addressRegion",
+    "zipCode": "schema:postalCode"
+  }
+}
