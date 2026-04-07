@@ -20,15 +20,15 @@ servers:
     description: SEC EDGAR Full-Text Search
 
 tags:
+  - name: Company Facts
+    description: Aggregated company financial facts
+
+  - name: Full-Text Search
+    description: Full-text search across all EDGAR filings
   - name: Submissions
     description: Company filing submission history
   - name: XBRL
     description: Structured XBRL financial data
-  - name: Full-Text Search
-    description: Full-text search across all EDGAR filings
-  - name: Company Facts
-    description: Aggregated company financial facts
-
 paths:
   /submissions/CIK{cik}.json:
     get:
@@ -77,8 +77,8 @@ paths:
         for a company. Covers all US-GAAP and DEI taxonomy concepts across all
         filings. Data is organized by concept with historical values per period.
       tags:
-        - XBRL
         - Company Facts
+        - XBRL
       parameters:
         - name: cik
           in: path

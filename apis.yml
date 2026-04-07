@@ -1,17 +1,15 @@
 aid: sec-edgar
-url: 
-  https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/apis.yml
 apis:
   - aid: sec-edgar:sec-edgar-full-text-search-api
     name: SEC EDGAR Full-Text Search API
     tags:
+      - Filings
       - Finance
       - Regulatory
-      - SEC
-      - Filings
       - Search
-    image: 
-      https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/image.png
+      - SEC
+    image: https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/image.png
     humanURL: https://efts.sec.gov/LATEST/search-index
     baseURL: https://efts.sec.gov
     properties:
@@ -27,12 +25,11 @@ apis:
   - aid: sec-edgar:sec-edgar-submissions-api
     name: SEC EDGAR Submissions API
     tags:
+      - Filings
       - Finance
       - Regulatory
       - SEC
-      - Filings
-    image: 
-      https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/image.png
+    image: https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/image.png
     humanURL: https://data.sec.gov/submissions/
     baseURL: https://data.sec.gov
     properties:
@@ -51,13 +48,12 @@ apis:
   - aid: sec-edgar:sec-edgar-xbrl-api
     name: SEC EDGAR XBRL Company Facts API
     tags:
+      - Filings
       - Finance
       - Regulatory
-      - XBRL
       - SEC
-      - Filings
-    image: 
-      https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/image.png
+      - XBRL
+    image: https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/image.png
     humanURL: https://data.sec.gov/api/xbrl/companyfacts/
     baseURL: https://data.sec.gov/api/xbrl
     properties:
@@ -76,13 +72,12 @@ apis:
   - aid: sec-edgar:sec-edgar-company-filings-api
     name: SEC EDGAR Company Filings API
     tags:
+      - Filings
       - Finance
       - Regulatory
-      - XBRL
       - SEC
-      - Filings
-    image: 
-      https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/image.png
+      - XBRL
+    image: https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/image.png
     humanURL: https://www.sec.gov/developer
     baseURL: https://efts.sec.gov
     properties:
