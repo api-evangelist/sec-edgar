@@ -1,0 +1,371 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SEC EDGAR Submissions & XBRL API
+  description: The SEC EDGAR data APIs provide free, authenticated-free access to company filing metadata, XBRL financial
+    data, and full-text search across all SEC submissions. APIs are hosted at data.sec.gov and efts.sec.gov and require a
+    descriptive User-Agent header per SEC fair-access policy.
+  tags:
+  - Sec
+  - Edgar
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: sec-edgar
+    baseUri: https://data.sec.gov
+    description: SEC EDGAR Submissions & XBRL API HTTP API.
+    resources:
+    - name: submissions-cik-cik-json
+      path: /submissions/CIK{cik}.json
+      operations:
+      - name: getcompanysubmissions
+        method: GET
+        description: Get company filing submission history
+        inputParameters:
+        - name: cik
+          in: path
+          type: string
+          required: true
+          description: '10-digit Central Index Key (CIK) with leading zeros. Example: 0000320193 for Apple Inc.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-xbrl-companyfacts-cik-cik-json
+      path: /api/xbrl/companyfacts/CIK{cik}.json
+      operations:
+      - name: getcompanyfacts
+        method: GET
+        description: Get all XBRL facts for a company
+        inputParameters:
+        - name: cik
+          in: path
+          type: string
+          required: true
+          description: 10-digit CIK with leading zeros
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-xbrl-companyconcept-cik-cik-taxonomy-concept
+      path: /api/xbrl/companyconcept/CIK{cik}/{taxonomy}/{concept}.json
+      operations:
+      - name: getcompanyconcept
+        method: GET
+        description: Get a single XBRL concept for a company
+        inputParameters:
+        - name: cik
+          in: path
+          type: string
+          required: true
+        - name: taxonomy
+          in: path
+          type: string
+          required: true
+          description: XBRL taxonomy namespace
+        - name: concept
+          in: path
+          type: string
+          required: true
+          description: XBRL concept name (camelCase)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-xbrl-frames-taxonomy-concept-unit-period-jso
+      path: /api/xbrl/frames/{taxonomy}/{concept}/{unit}/{period}.json
+      operations:
+      - name: getxbrlframes
+        method: GET
+        description: Get all company values for a concept in a period
+        inputParameters:
+        - name: taxonomy
+          in: path
+          type: string
+          required: true
+        - name: concept
+          in: path
+          type: string
+          required: true
+        - name: unit
+          in: path
+          type: string
+          required: true
+          description: Unit of measure (USD, shares, pure)
+        - name: period
+          in: path
+          type: string
+          required: true
+          description: 'Period identifier. For annual instant: CY{year}Q{quarter}I. For annual duration: CY{year}.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: latest-search-index
+      path: /LATEST/search-index
+      operations:
+      - name: fulltextsearch
+        method: GET
+        description: Full-text search across EDGAR filings
+        inputParameters:
+        - name: q
+          in: query
+          type: string
+          description: Full-text search query (Elasticsearch query string syntax)
+        - name: dateRange
+          in: query
+          type: string
+          description: Date range filter
+        - name: startdt
+          in: query
+          type: string
+        - name: enddt
+          in: query
+          type: string
+        - name: forms
+          in: query
+          type: string
+          description: Comma-separated list of form types to filter
+        - name: entity
+          in: query
+          type: string
+          description: Company name search filter
+        - name: _source
+          in: query
+          type: string
+          description: Response fields to include
+        - name: from
+          in: query
+          type: integer
+          description: Pagination offset
+        - name: hits.hits.total.value
+          in: query
+          type: integer
+          description: Maximum results to return
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: sec-edgar-rest
+    description: REST adapter for SEC EDGAR Submissions & XBRL API.
+    resources:
+    - path: /submissions/CIK{cik}.json
+      name: getcompanysubmissions
+      operations:
+      - method: GET
+        name: getcompanysubmissions
+        description: Get company filing submission history
+        call: sec-edgar.getcompanysubmissions
+        with:
+          cik: rest.cik
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/xbrl/companyfacts/CIK{cik}.json
+      name: getcompanyfacts
+      operations:
+      - method: GET
+        name: getcompanyfacts
+        description: Get all XBRL facts for a company
+        call: sec-edgar.getcompanyfacts
+        with:
+          cik: rest.cik
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/xbrl/companyconcept/CIK{cik}/{taxonomy}/{concept}.json
+      name: getcompanyconcept
+      operations:
+      - method: GET
+        name: getcompanyconcept
+        description: Get a single XBRL concept for a company
+        call: sec-edgar.getcompanyconcept
+        with:
+          cik: rest.cik
+          taxonomy: rest.taxonomy
+          concept: rest.concept
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/xbrl/frames/{taxonomy}/{concept}/{unit}/{period}.json
+      name: getxbrlframes
+      operations:
+      - method: GET
+        name: getxbrlframes
+        description: Get all company values for a concept in a period
+        call: sec-edgar.getxbrlframes
+        with:
+          taxonomy: rest.taxonomy
+          concept: rest.concept
+          unit: rest.unit
+          period: rest.period
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /LATEST/search-index
+      name: fulltextsearch
+      operations:
+      - method: GET
+        name: fulltextsearch
+        description: Full-text search across EDGAR filings
+        call: sec-edgar.fulltextsearch
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: sec-edgar-mcp
+    transport: http
+    description: MCP adapter for SEC EDGAR Submissions & XBRL API for AI agent use.
+    tools:
+    - name: getcompanysubmissions
+      description: Get company filing submission history
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sec-edgar.getcompanysubmissions
+      with:
+        cik: tools.cik
+      inputParameters:
+      - name: cik
+        type: string
+        description: '10-digit Central Index Key (CIK) with leading zeros. Example: 0000320193 for Apple Inc.'
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcompanyfacts
+      description: Get all XBRL facts for a company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sec-edgar.getcompanyfacts
+      with:
+        cik: tools.cik
+      inputParameters:
+      - name: cik
+        type: string
+        description: 10-digit CIK with leading zeros
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcompanyconcept
+      description: Get a single XBRL concept for a company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sec-edgar.getcompanyconcept
+      with:
+        cik: tools.cik
+        taxonomy: tools.taxonomy
+        concept: tools.concept
+      inputParameters:
+      - name: cik
+        type: string
+        description: cik
+        required: true
+      - name: taxonomy
+        type: string
+        description: XBRL taxonomy namespace
+        required: true
+      - name: concept
+        type: string
+        description: XBRL concept name (camelCase)
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getxbrlframes
+      description: Get all company values for a concept in a period
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sec-edgar.getxbrlframes
+      with:
+        taxonomy: tools.taxonomy
+        concept: tools.concept
+        unit: tools.unit
+        period: tools.period
+      inputParameters:
+      - name: taxonomy
+        type: string
+        description: taxonomy
+        required: true
+      - name: concept
+        type: string
+        description: concept
+        required: true
+      - name: unit
+        type: string
+        description: Unit of measure (USD, shares, pure)
+        required: true
+      - name: period
+        type: string
+        description: 'Period identifier. For annual instant: CY{year}Q{quarter}I. For annual duration: CY{year}.'
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fulltextsearch
+      description: Full-text search across EDGAR filings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sec-edgar.fulltextsearch
+      with:
+        q: tools.q
+        dateRange: tools.dateRange
+        startdt: tools.startdt
+        enddt: tools.enddt
+        forms: tools.forms
+        entity: tools.entity
+        _source: tools._source
+        from: tools.from
+        hits.hits.total.value: tools.hits.hits.total.value
+      inputParameters:
+      - name: q
+        type: string
+        description: Full-text search query (Elasticsearch query string syntax)
+      - name: dateRange
+        type: string
+        description: Date range filter
+      - name: startdt
+        type: string
+        description: startdt
+      - name: enddt
+        type: string
+        description: enddt
+      - name: forms
+        type: string
+        description: Comma-separated list of form types to filter
+      - name: entity
+        type: string
+        description: Company name search filter
+      - name: _source
+        type: string
+        description: Response fields to include
+      - name: from
+        type: integer
+        description: Pagination offset
+      - name: hits.hits.total.value
+        type: integer
+        description: Maximum results to return
+      outputParameters:
+      - type: object
+        mapping: $.
