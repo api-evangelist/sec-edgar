@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SEC EDGAR Submissions & XBRL API — Full-Text Search
+  description: 'SEC EDGAR Submissions & XBRL API — Full-Text Search. 1 operations. Lead operation: Full-text search across
+    EDGAR filings. Self-contained Naftiko capability covering one Sec Edgar business surface.'
+  tags:
+  - Sec Edgar
+  - Full-Text Search
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SEC_EDGAR_API_KEY: SEC_EDGAR_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: submissions-full-text-search
+    baseUri: https://data.sec.gov
+    description: SEC EDGAR Submissions & XBRL API — Full-Text Search business capability. Self-contained, no shared references.
+    resources:
+    - name: LATEST-search-index
+      path: /LATEST/search-index
+      operations:
+      - name: fulltextsearch
+        method: GET
+        description: Full-text search across EDGAR filings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: q
+          in: query
+          type: string
+          description: Full-text search query (Elasticsearch query string syntax)
+        - name: dateRange
+          in: query
+          type: string
+          description: Date range filter
+        - name: startdt
+          in: query
+          type: string
+        - name: enddt
+          in: query
+          type: string
+        - name: forms
+          in: query
+          type: string
+          description: Comma-separated list of form types to filter
+        - name: entity
+          in: query
+          type: string
+          description: Company name search filter
+        - name: _source
+          in: query
+          type: string
+          description: Response fields to include
+        - name: from
+          in: query
+          type: integer
+          description: Pagination offset
+        - name: hits.hits.total.value
+          in: query
+          type: integer
+          description: Maximum results to return
+  exposes:
+  - type: rest
+    namespace: submissions-full-text-search-rest
+    port: 8080
+    description: REST adapter for SEC EDGAR Submissions & XBRL API — Full-Text Search. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/latest/search-index
+      name: latest-search-index
+      description: REST surface for LATEST-search-index.
+      operations:
+      - method: GET
+        name: fulltextsearch
+        description: Full-text search across EDGAR filings
+        call: submissions-full-text-search.fulltextsearch
+        with:
+          q: rest.q
+          dateRange: rest.dateRange
+          startdt: rest.startdt
+          enddt: rest.enddt
+          forms: rest.forms
+          entity: rest.entity
+          _source: rest._source
+          from: rest.from
+          hits.hits.total.value: rest.hits.hits.total.value
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: submissions-full-text-search-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SEC EDGAR Submissions & XBRL API — Full-Text Search. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: full-text-search-across-edgar
+      description: Full-text search across EDGAR filings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: submissions-full-text-search.fulltextsearch
+      with:
+        q: tools.q
+        dateRange: tools.dateRange
+        startdt: tools.startdt
+        enddt: tools.enddt
+        forms: tools.forms
+        entity: tools.entity
+        _source: tools._source
+        from: tools.from
+        hits.hits.total.value: tools.hits.hits.total.value
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,77 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SEC EDGAR Submissions & XBRL API — Company Facts
+  description: 'SEC EDGAR Submissions & XBRL API — Company Facts. 1 operations. Lead operation: Get all XBRL facts for a company.
+    Self-contained Naftiko capability covering one Sec Edgar business surface.'
+  tags:
+  - Sec Edgar
+  - Company Facts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SEC_EDGAR_API_KEY: SEC_EDGAR_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: submissions-company-facts
+    baseUri: https://data.sec.gov
+    description: SEC EDGAR Submissions & XBRL API — Company Facts business capability. Self-contained, no shared references.
+    resources:
+    - name: api-xbrl-companyfacts-CIK{cik}.json
+      path: /api/xbrl/companyfacts/CIK{cik}.json
+      operations:
+      - name: getcompanyfacts
+        method: GET
+        description: Get all XBRL facts for a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cik
+          in: path
+          type: string
+          description: 10-digit CIK with leading zeros
+          required: true
+  exposes:
+  - type: rest
+    namespace: submissions-company-facts-rest
+    port: 8080
+    description: REST adapter for SEC EDGAR Submissions & XBRL API — Company Facts. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/xbrl/companyfacts/cik-cik-json
+      name: api-xbrl-companyfacts-cik-cik-json
+      description: REST surface for api-xbrl-companyfacts-CIK{cik}.json.
+      operations:
+      - method: GET
+        name: getcompanyfacts
+        description: Get all XBRL facts for a company
+        call: submissions-company-facts.getcompanyfacts
+        with:
+          cik: rest.cik
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: submissions-company-facts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SEC EDGAR Submissions & XBRL API — Company Facts. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: get-all-xbrl-facts-company
+      description: Get all XBRL facts for a company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: submissions-company-facts.getcompanyfacts
+      with:
+        cik: tools.cik
+      outputParameters:
+      - type: object
+        mapping: $.
