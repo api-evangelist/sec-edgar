@@ -1,85 +1,115 @@
-# Unknown (sec-edgar)
+# sec-edgar (sec-edgar)
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/apis.yml)
+SEC EDGAR (Electronic Data Gathering, Analysis, and Retrieval) is the U.S. Securities and Exchange Commission's online database where public companies file mandatory disclosures and other corporate filings.
+
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/apis.yml)
 
 ## Timestamps
 
-- **Modified:** 2026-03-18 
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### SEC EDGAR Full-Text Search API
+
 The SEC EDGAR Full-Text Search API (EFTS) allows searching the full text of all EDGAR filings. Supports keyword search, date range filtering, form type filtering, and entity-based queries returning metadata for matching filings.
 
-**Human URL:** [https://efts.sec.gov/LATEST/search-index](https://efts.sec.gov/LATEST/search-index)
+- **Human URL:** [https://efts.sec.gov/LATEST/search-index](https://efts.sec.gov/LATEST/search-index)
+- **Base URL:** `https://efts.sec.gov`
 
+#### Tags
 
-#### Tags:
-
- - Finance, Regulatory, SEC, Filings, Search
+- Filings
+- Finance
+- Regulatory
+- Search
+- SEC
 
 #### Properties
 
 - [Documentation](https://efts.sec.gov/LATEST/search-index)
-- [OpenAPI](openapi/sec-edgar-submissions-openapi.yml)
+- [OpenAPI](openapi/sec-edgar-submissions-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/sec-edgar-submissions.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/sec-edgar-submissions.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### SEC EDGAR Submissions API
+
 The SEC EDGAR Submissions API returns all company filing metadata (10-K, 10-Q, 8-K, etc.) in JSON format for a given CIK number. Returns recent and historical submission data including form type, filing date, accession numbers, and document indexes.
 
-**Human URL:** [https://data.sec.gov/submissions/](https://data.sec.gov/submissions/)
+- **Human URL:** [https://data.sec.gov/submissions/](https://data.sec.gov/submissions/)
+- **Base URL:** `https://data.sec.gov`
 
+#### Tags
 
-#### Tags:
-
- - Finance, Regulatory, SEC, Filings
+- Filings
+- Finance
+- Regulatory
+- SEC
 
 #### Properties
 
 - [Documentation](https://data.sec.gov/submissions/)
 - [Reference](https://www.sec.gov/developer)
-- [OpenAPI](openapi/sec-edgar-submissions-openapi.yml)
+- [OpenAPI](openapi/sec-edgar-submissions-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/sec-edgar-submissions.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/sec-edgar-submissions.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### SEC EDGAR XBRL Company Facts API
+
 The SEC EDGAR XBRL Company Facts API delivers structured financial data extracted from XBRL-tagged filings. Returns all reported facts for a company including income statement, balance sheet, and cash flow data in JSON format organized by taxonomy concept.
 
-**Human URL:** [https://data.sec.gov/api/xbrl/companyfacts/](https://data.sec.gov/api/xbrl/companyfacts/)
+- **Human URL:** [https://data.sec.gov/api/xbrl/companyfacts/](https://data.sec.gov/api/xbrl/companyfacts/)
+- **Base URL:** `https://data.sec.gov/api/xbrl`
 
+#### Tags
 
-#### Tags:
-
- - Finance, Regulatory, XBRL, SEC, Filings
+- Filings
+- Finance
+- Regulatory
+- SEC
+- XBRL
 
 #### Properties
 
 - [Documentation](https://data.sec.gov/api/xbrl/companyfacts/)
 - [Reference](https://www.sec.gov/developer)
-- [OpenAPI](openapi/sec-edgar-submissions-openapi.yml)
+- [OpenAPI](openapi/sec-edgar-submissions-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/sec-edgar-submissions.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/sec-edgar-submissions.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### SEC EDGAR Company Filings API
+
 The SEC EDGAR (Electronic Data Gathering, Analysis, and Retrieval) system provides REST APIs for accessing company filings, XBRL financial data, and full-text search across SEC submissions. APIs deliver 10-K, 10-Q, 8-K, and other filing data in JSON, XML, and XBRL formats.
 
-**Human URL:** [https://www.sec.gov/developer](https://www.sec.gov/developer)
+- **Human URL:** [https://www.sec.gov/developer](https://www.sec.gov/developer)
+- **Base URL:** `https://efts.sec.gov`
 
+#### Tags
 
-#### Tags:
-
- - Finance, Regulatory, XBRL, SEC, Filings
+- Filings
+- Finance
+- Regulatory
+- SEC
+- XBRL
 
 #### Properties
 
 - [Documentation](https://www.sec.gov/developer)
 - [Reference](https://www.sec.gov/developer)
+- [Postman Collection](collections/sec-edgar-submissions.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/sec-edgar-submissions.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ## Common Properties
 
+- [GitHub Organization](https://github.com/sec-edgar)
 - [Portal](https://www.sec.gov/developer)
 - [Documentation](https://www.sec.gov/developer)
-- [GettingStarted](https://www.sec.gov/developer)
-- [PrivacyPolicy](https://www.sec.gov/privacy-policy)
+- [Getting Started](https://www.sec.gov/developer)
+- [Privacy Policy](https://www.sec.gov/privacy-policy)
 - [Website](https://www.sec.gov/)
-- [JSONSchema](json-schema/sec-edgar-filing-schema.json)
-- [JSONSchema](json-schema/sec-edgar-company-schema.json)
-- [JSONLDContext](json-ld/sec-edgar-context.jsonld)
+- [JSON Schema](json-schema/sec-edgar-filing-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/sec-edgar-company-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [J S O N L D Context](json-ld/sec-edgar-context.jsonld)
 
 ## Maintainers
 
