@@ -85,6 +85,8 @@ apis:
       filings, XBRL financial data, and full-text search across SEC submissions. APIs deliver 10-K, 10-Q, 8-K, and other
       filing data in JSON, XML, and XBRL formats.
 common:
+  - type: AgenticAccess
+    url: agentic-access/sec-edgar-agentic-access.yml
   - type: DomainSecurity
     url: security/sec-edgar-domain-security.yml
   - type: GitHubOrganization
