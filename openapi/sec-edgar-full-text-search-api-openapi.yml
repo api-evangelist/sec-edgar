@@ -1,0 +1,156 @@
+openapi: 3.1.0
+info:
+  title: SEC EDGAR Submissions & XBRL Company Facts Full-Text Search API
+  description: The SEC EDGAR data APIs provide free, authenticated-free access to company filing metadata, XBRL financial data, and full-text search across all SEC submissions. APIs are hosted at data.sec.gov and efts.sec.gov and require a descriptive User-Agent header per SEC fair-access policy.
+  version: 1.0.0
+  contact:
+    name: SEC Developer Resources
+    url: https://www.sec.gov/developer
+  license:
+    name: Public Domain (U.S. Government Work)
+    url: https://www.sec.gov/privacy.htm
+servers:
+- url: https://data.sec.gov
+  description: SEC EDGAR Data API
+- url: https://efts.sec.gov
+  description: SEC EDGAR Full-Text Search
+tags:
+- name: Full-Text Search
+  description: Full-text search across all EDGAR filings
+paths:
+  /LATEST/search-index:
+    get:
+      operationId: fullTextSearch
+      summary: Full-text search across EDGAR filings
+      description: Searches the full text of all EDGAR filings submitted since 2001. Supports keyword search, form type filtering, date ranges, and entity-based queries. Returns filing metadata and snippets.
+      tags:
+      - Full-Text Search
+      servers:
+      - url: https://efts.sec.gov
+      parameters:
+      - name: q
+        in: query
+        required: false
+        description: Full-text search query (Elasticsearch query string syntax)
+        schema:
+          type: string
+        example: '"material weakness" AND "internal controls"'
+      - name: dateRange
+        in: query
+        required: false
+        description: Date range filter
+        schema:
+          type: string
+          enum:
+          - custom
+        example: custom
+      - name: startdt
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2024-01-01'
+      - name: enddt
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2025-12-31'
+      - name: forms
+        in: query
+        required: false
+        description: Comma-separated list of form types to filter
+        schema:
+          type: string
+        example: 10-K,10-Q
+      - name: entity
+        in: query
+        required: false
+        description: Company name search filter
+        schema:
+          type: string
+        example: Apple Inc
+      - name: _source
+        in: query
+        required: false
+        description: Response fields to include
+        schema:
+          type: string
+      - name: from
+        in: query
+        required: false
+        description: Pagination offset
+        schema:
+          type: integer
+          default: 0
+      - name: hits.hits.total.value
+        in: query
+        required: false
+        description: Maximum results to return
+        schema:
+          type: integer
+          default: 10
+          maximum: 10
+      responses:
+        '200':
+          description: Full-text search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResults'
+components:
+  schemas:
+    SearchHit:
+      type: object
+      properties:
+        _id:
+          type: string
+        _score:
+          type: number
+        _source:
+          type: object
+          properties:
+            period_of_report:
+              type: string
+            entity_name:
+              type: string
+            file_num:
+              type: string
+            biz_location:
+              type: string
+            inc_states:
+              type: string
+            form_type:
+              type: string
+            file_date:
+              type: string
+              format: date
+            accession_no:
+              type: string
+            display_date_filed:
+              type: string
+        highlight:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    SearchResults:
+      type: object
+      properties:
+        hits:
+          type: object
+          properties:
+            total:
+              type: object
+              properties:
+                value:
+                  type: integer
+                relation:
+                  type: string
+            hits:
+              type: array
+              items:
+                $ref: '#/components/schemas/SearchHit'

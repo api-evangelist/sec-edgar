@@ -1,0 +1,217 @@
+openapi: 3.1.0
+info:
+  title: SEC EDGAR & XBRL Company Facts Submissions API
+  description: The SEC EDGAR data APIs provide free, authenticated-free access to company filing metadata, XBRL financial data, and full-text search across all SEC submissions. APIs are hosted at data.sec.gov and efts.sec.gov and require a descriptive User-Agent header per SEC fair-access policy.
+  version: 1.0.0
+  contact:
+    name: SEC Developer Resources
+    url: https://www.sec.gov/developer
+  license:
+    name: Public Domain (U.S. Government Work)
+    url: https://www.sec.gov/privacy.htm
+servers:
+- url: https://data.sec.gov
+  description: SEC EDGAR Data API
+- url: https://efts.sec.gov
+  description: SEC EDGAR Full-Text Search
+tags:
+- name: Submissions
+  description: Company filing submission history
+paths:
+  /submissions/CIK{cik}.json:
+    get:
+      operationId: getCompanySubmissions
+      summary: Get company filing submission history
+      description: Returns all filing metadata for a company identified by CIK (Central Index Key). Includes recent filings inline and older filings referenced in separate data files. Contains company metadata, SIC code, fiscal year end, and filing history.
+      tags:
+      - Submissions
+      parameters:
+      - name: cik
+        in: path
+        required: true
+        description: '10-digit Central Index Key (CIK) with leading zeros. Example: 0000320193 for Apple Inc.'
+        schema:
+          type: string
+          pattern: ^\d{10}$
+        example: 0000320193
+      responses:
+        '200':
+          description: Company submissions data
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanySubmissions'
+        '404':
+          description: Company CIK not found
+        '429':
+          description: Rate limit exceeded — max 10 requests/second
+components:
+  schemas:
+    CompanyAddress:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        stateOrCountry:
+          type: string
+        zipCode:
+          type: string
+        stateOrCountryDescription:
+          type: string
+    FilingHistory:
+      type: object
+      description: Arrays of parallel filing metadata fields
+      properties:
+        accessionNumber:
+          type: array
+          items:
+            type: string
+          description: Filing accession numbers (XXXXXXXXXX-YY-ZZZZZZ format)
+        filingDate:
+          type: array
+          items:
+            type: string
+            format: date
+        reportDate:
+          type: array
+          items:
+            type: string
+            format: date
+        acceptanceDateTime:
+          type: array
+          items:
+            type: string
+            format: date-time
+        act:
+          type: array
+          items:
+            type: string
+        form:
+          type: array
+          items:
+            type: string
+          description: SEC form type (10-K, 10-Q, 8-K, etc.)
+        fileNumber:
+          type: array
+          items:
+            type: string
+        filmNumber:
+          type: array
+          items:
+            type: string
+        items:
+          type: array
+          items:
+            type: string
+        size:
+          type: array
+          items:
+            type: integer
+          description: Filing size in bytes
+        isXBRL:
+          type: array
+          items:
+            type: integer
+          description: 1 if XBRL tagged, 0 otherwise
+        isInlineXBRL:
+          type: array
+          items:
+            type: integer
+        primaryDocument:
+          type: array
+          items:
+            type: string
+        primaryDocDescription:
+          type: array
+          items:
+            type: string
+    CompanySubmissions:
+      type: object
+      description: Complete submission history for a company
+      properties:
+        cik:
+          type: string
+          description: Company CIK (without leading zeros as string)
+        entityType:
+          type: string
+          example: operating
+        sic:
+          type: string
+          description: Standard Industrial Classification code
+          example: '7372'
+        sicDescription:
+          type: string
+          example: Prepackaged Software
+        name:
+          type: string
+          example: Apple Inc.
+        tickers:
+          type: array
+          items:
+            type: string
+          example:
+          - AAPL
+        exchanges:
+          type: array
+          items:
+            type: string
+          example:
+          - Nasdaq
+        ein:
+          type: string
+          description: Employer Identification Number
+        description:
+          type: string
+        website:
+          type: string
+          format: uri
+        investorWebsite:
+          type: string
+          format: uri
+        category:
+          type: string
+        fiscalYearEnd:
+          type: string
+          description: Fiscal year end as MMDD
+          example: 0930
+        stateOfIncorporation:
+          type: string
+        stateOfIncorporationDescription:
+          type: string
+        addresses:
+          type: object
+          properties:
+            mailing:
+              $ref: '#/components/schemas/CompanyAddress'
+            business:
+              $ref: '#/components/schemas/CompanyAddress'
+        filings:
+          type: object
+          properties:
+            recent:
+              $ref: '#/components/schemas/FilingHistory'
+            files:
+              type: array
+              description: References to additional paginated filing data files
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  filingCount:
+                    type: integer
+                  filingFrom:
+                    type: string
+                    format: date
+                  filingTo:
+                    type: string
+                    format: date
