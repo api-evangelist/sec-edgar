@@ -1,0 +1,20 @@
+{
+  "provider": "sec-edgar",
+  "sources": [
+    "sec-edgar-company-facts-api-openapi.yml",
+    "sec-edgar-full-text-search-api-openapi.yml",
+    "sec-edgar-submissions-api-openapi.yml",
+    "sec-edgar-xbrl-api-openapi.yml"
+  ],
+  "outputs": [
+    "sec-edgar-company-facts-api-openapi.yml",
+    "sec-edgar-full-text-search-api-openapi.yml",
+    "sec-edgar-submissions-api-openapi.yml",
+    "sec-edgar-xbrl-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
