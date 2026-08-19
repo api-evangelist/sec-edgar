@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SEC EDGAR Submissions & XBRL Company Facts Full-Text Search API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Full-Text Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Full-text search across EDGAR filings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://data.sec.gov/LATEST/search-index",
+            "params": [
+              {
+                "name": "q",
+                "value": "\"material weakness\" AND \"internal controls\"",
+                "type": "query",
+                "description": "Full-text search query (Elasticsearch query string syntax)"
+              },
+              {
+                "name": "dateRange",
+                "value": "custom",
+                "type": "query",
+                "description": "Date range filter"
+              },
+              {
+                "name": "startdt",
+                "value": "2024-01-01",
+                "type": "query"
+              },
+              {
+                "name": "enddt",
+                "value": "2025-12-31",
+                "type": "query"
+              },
+              {
+                "name": "forms",
+                "value": "10-K,10-Q",
+                "type": "query",
+                "description": "Comma-separated list of form types to filter"
+              },
+              {
+                "name": "entity",
+                "value": "Apple Inc",
+                "type": "query",
+                "description": "Company name search filter"
+              },
+              {
+                "name": "_source",
+                "value": "",
+                "type": "query",
+                "description": "Response fields to include"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "hits.hits.total.value",
+                "value": "",
+                "type": "query",
+                "description": "Maximum results to return"
+              }
+            ]
+          },
+          "docs": "Searches the full text of all EDGAR filings submitted since 2001. Supports keyword search, form type filtering, date ranges, and entity-based queries. Returns filing metadata and snippets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

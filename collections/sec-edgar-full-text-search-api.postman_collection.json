@@ -1,0 +1,200 @@
+{
+  "item": [
+    {
+      "id": "7c144332-cb17-4e8b-b7e9-fbcf4fba7668",
+      "name": "Full-Text Search",
+      "description": {
+        "content": "Full-text search across all EDGAR filings",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9a1a1a8c-e381-4de6-92c4-f7f3d39b82b4",
+          "name": "Full-text search across EDGAR filings",
+          "request": {
+            "name": "Full-text search across EDGAR filings",
+            "description": {
+              "content": "Searches the full text of all EDGAR filings submitted since 2001. Supports keyword search, form type filtering, date ranges, and entity-based queries. Returns filing metadata and snippets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "LATEST",
+                "search-index"
+              ],
+              "host": [
+                "efts",
+                "sec",
+                "gov"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Full-text search query (Elasticsearch query string syntax)"
+                },
+                {
+                  "disabled": false,
+                  "key": "dateRange",
+                  "value": "<string>",
+                  "description": "Date range filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "startdt",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "enddt",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "forms",
+                  "value": "<string>",
+                  "description": "Comma-separated list of form types to filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "entity",
+                  "value": "<string>",
+                  "description": "Company name search filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "_source",
+                  "value": "<string>",
+                  "description": "Response fields to include"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "0",
+                  "description": "Pagination offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "hits.hits.total.value",
+                  "value": "10",
+                  "description": "Maximum results to return"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d2864010-4d02-47aa-a2ac-ef29da5f5fe2",
+              "name": "Full-text search results",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "LATEST",
+                    "search-index"
+                  ],
+                  "host": [
+                    "efts",
+                    "sec",
+                    "gov"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "\"material weakness\" AND \"internal controls\""
+                    },
+                    {
+                      "key": "dateRange",
+                      "value": "custom"
+                    },
+                    {
+                      "key": "startdt",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "key": "enddt",
+                      "value": "2025-12-31"
+                    },
+                    {
+                      "key": "forms",
+                      "value": "10-K,10-Q"
+                    },
+                    {
+                      "key": "entity",
+                      "value": "Apple Inc"
+                    },
+                    {
+                      "key": "_source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "0"
+                    },
+                    {
+                      "key": "hits.hits.total.value",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hits\": {\n    \"total\": {\n      \"value\": 1509,\n      \"relation\": \"string\"\n    },\n    \"hits\": [\n      {\n        \"_id\": \"string\",\n        \"_score\": 6548.11625710601,\n        \"_source\": {\n          \"period_of_report\": \"string\",\n          \"entity_name\": \"string\",\n          \"file_num\": \"string\",\n          \"biz_location\": \"string\",\n          \"inc_states\": \"string\",\n          \"form_type\": \"string\",\n          \"file_date\": \"1981-12-05\",\n          \"accession_no\": \"string\",\n          \"display_date_filed\": \"string\"\n        },\n        \"highlight\": {\n          \"key_0\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"_id\": \"string\",\n        \"_score\": 6297.163076627069,\n        \"_source\": {\n          \"period_of_report\": \"string\",\n          \"entity_name\": \"string\",\n          \"file_num\": \"string\",\n          \"biz_location\": \"string\",\n          \"inc_states\": \"string\",\n          \"form_type\": \"string\",\n          \"file_date\": \"1987-05-13\",\n          \"accession_no\": \"string\",\n          \"display_date_filed\": \"string\"\n        },\n        \"highlight\": {\n          \"key_0\": [\n            \"string\",\n            \"string\"\n          ],\n          \"key_1\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://data.sec.gov",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fac3663a-bbe4-4493-b3de-cca92aae3c0d",
+    "name": "SEC EDGAR Submissions & XBRL Company Facts Full-Text Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SEC EDGAR data APIs provide free, authenticated-free access to company filing metadata, XBRL financial data, and full-text search across all SEC submissions. APIs are hosted at data.sec.gov and efts.sec.gov and require a descriptive User-Agent header per SEC fair-access policy.\n\nContact Support:\n Name: SEC Developer Resources",
+      "type": "text/plain"
+    }
+  }
+}

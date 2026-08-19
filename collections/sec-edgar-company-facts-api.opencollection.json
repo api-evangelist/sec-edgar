@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SEC EDGAR Submissions & XBRL Company Facts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Company Facts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all XBRL facts for a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK:cik.json",
+            "params": [
+              {
+                "name": "cik",
+                "value": "320193",
+                "type": "path",
+                "description": "10-digit CIK with leading zeros"
+              }
+            ]
+          },
+          "docs": "Returns all structured financial data reported in XBRL-tagged SEC filings for a company. Covers all US-GAAP and DEI taxonomy concepts across all filings. Data is organized by concept with historical values per period."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

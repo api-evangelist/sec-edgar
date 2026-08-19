@@ -1,0 +1,434 @@
+{
+  "item": [
+    {
+      "id": "be4e0982-5e28-4355-bc29-4fd969486c16",
+      "name": "XBRL",
+      "description": {
+        "content": "Structured XBRL financial data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6ded23c9-0700-4bf3-afe6-933b7d6ecd63",
+          "name": "Get all XBRL facts for a company",
+          "request": {
+            "name": "Get all XBRL facts for a company",
+            "description": {
+              "content": "Returns all structured financial data reported in XBRL-tagged SEC filings for a company. Covers all US-GAAP and DEI taxonomy concepts across all filings. Data is organized by concept with historical values per period.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "xbrl",
+                "companyfacts",
+                "CIK{{cik}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "06ef01a6-ecc9-41a1-9f48-3acb1a87bee3",
+              "name": "All XBRL company facts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "xbrl",
+                    "companyfacts",
+                    "CIK{{cik}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cik\": 9894,\n  \"entityName\": \"string\",\n  \"facts\": {\n    \"key_0\": {\n      \"key_0\": {\n        \"label\": \"string\",\n        \"description\": \"string\",\n        \"units\": {\n          \"key_0\": [\n            {\n              \"end\": \"2020-02-08\",\n              \"val\": 409.1837403026788,\n              \"accn\": \"string\",\n              \"fy\": 8731,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"2004-06-30\",\n              \"frame\": \"string\",\n              \"start\": \"1966-08-02\"\n            },\n            {\n              \"end\": \"2005-04-06\",\n              \"val\": 6706.68557041033,\n              \"accn\": \"string\",\n              \"fy\": 8904,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"1992-06-28\",\n              \"frame\": \"string\",\n              \"start\": \"1991-06-09\"\n            }\n          ]\n        }\n      }\n    },\n    \"key_1\": {\n      \"key_0\": {\n        \"label\": \"string\",\n        \"description\": \"string\",\n        \"units\": {\n          \"key_0\": [\n            {\n              \"end\": \"1976-12-25\",\n              \"val\": 4928.055932907289,\n              \"accn\": \"string\",\n              \"fy\": 40,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"1976-06-07\",\n              \"frame\": \"string\",\n              \"start\": \"1948-04-19\"\n            },\n            {\n              \"end\": \"1959-06-20\",\n              \"val\": 6883.740945188898,\n              \"accn\": \"string\",\n              \"fy\": 7780,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"2010-06-01\",\n              \"frame\": \"string\",\n              \"start\": \"1954-03-29\"\n            }\n          ]\n        }\n      },\n      \"key_1\": {\n        \"label\": \"string\",\n        \"description\": \"string\",\n        \"units\": {\n          \"key_0\": [\n            {\n              \"end\": \"1990-04-17\",\n              \"val\": 9622.096365752388,\n              \"accn\": \"string\",\n              \"fy\": 7857,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"1954-09-10\",\n              \"frame\": \"string\",\n              \"start\": \"1956-06-09\"\n            },\n            {\n              \"end\": \"2020-08-15\",\n              \"val\": 2400.267073459532,\n              \"accn\": \"string\",\n              \"fy\": 5152,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"2018-01-23\",\n              \"frame\": \"string\",\n              \"start\": \"1979-04-04\"\n            }\n          ],\n          \"key_1\": [\n            {\n              \"end\": \"1994-07-03\",\n              \"val\": 9730.838342326768,\n              \"accn\": \"string\",\n              \"fy\": 9921,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"1973-03-05\",\n              \"frame\": \"string\",\n              \"start\": \"2024-05-18\"\n            },\n            {\n              \"end\": \"2017-01-08\",\n              \"val\": 6994.626052422806,\n              \"accn\": \"string\",\n              \"fy\": 6754,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"1965-09-06\",\n              \"frame\": \"string\",\n              \"start\": \"2000-07-22\"\n            }\n          ],\n          \"key_2\": [\n            {\n              \"end\": \"2006-11-03\",\n              \"val\": 5750.807472666034,\n              \"accn\": \"string\",\n              \"fy\": 5267,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"1975-04-14\",\n              \"frame\": \"string\",\n              \"start\": \"1956-09-25\"\n            },\n            {\n              \"end\": \"1988-11-29\",\n              \"val\": 7288.542083971629,\n              \"accn\": \"string\",\n              \"fy\": 7987,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"2014-11-16\",\n              \"frame\": \"string\",\n              \"start\": \"1951-10-19\"\n            }\n          ],\n          \"key_3\": [\n            {\n              \"end\": \"1998-09-22\",\n              \"val\": 3847.025855241263,\n              \"accn\": \"string\",\n              \"fy\": 327,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"1965-10-24\",\n              \"frame\": \"string\",\n              \"start\": \"1952-05-28\"\n            },\n            {\n              \"end\": \"1982-04-08\",\n              \"val\": 3578.4345358475434,\n              \"accn\": \"string\",\n              \"fy\": 8449,\n              \"fp\": \"string\",\n              \"form\": \"string\",\n              \"filed\": \"2016-10-02\",\n              \"frame\": \"string\",\n              \"start\": \"1980-07-25\"\n            }\n          ]\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26fb397d-095a-475e-9def-309883244f26",
+              "name": "Company not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "xbrl",
+                    "companyfacts",
+                    "CIK{{cik}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1874f2ee-6747-464f-a15c-31cd7cf68c22",
+          "name": "Get a single XBRL concept for a company",
+          "request": {
+            "name": "Get a single XBRL concept for a company",
+            "description": {
+              "content": "Returns all historical values reported for a specific XBRL concept by a company. For example, retrieve all reported values of AccountsPayableCurrent from the us-gaap taxonomy across all filings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "xbrl",
+                "companyconcept",
+                "CIK{{cik}}",
+                ":taxonomy",
+                "{{concept}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taxonomy",
+                  "description": "(Required) XBRL taxonomy namespace"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2bb34801-5294-48a2-8295-4608994e351a",
+              "name": "Historical values for the specified concept",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "xbrl",
+                    "companyconcept",
+                    "CIK{{cik}}",
+                    ":taxonomy",
+                    "{{concept}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taxonomy",
+                      "description": "(Required) XBRL taxonomy namespace"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cik\": 9143,\n  \"taxonomy\": \"string\",\n  \"tag\": \"string\",\n  \"label\": \"string\",\n  \"description\": \"string\",\n  \"entityName\": \"string\",\n  \"units\": {\n    \"key_0\": [\n      {\n        \"end\": \"1992-08-20\",\n        \"val\": 7157.221673634749,\n        \"accn\": \"string\",\n        \"fy\": 5220,\n        \"fp\": \"string\",\n        \"form\": \"string\",\n        \"filed\": \"2014-10-19\",\n        \"frame\": \"string\",\n        \"start\": \"2015-09-17\"\n      },\n      {\n        \"end\": \"1979-04-28\",\n        \"val\": 5645.509119642824,\n        \"accn\": \"string\",\n        \"fy\": 7780,\n        \"fp\": \"string\",\n        \"form\": \"string\",\n        \"filed\": \"2001-04-27\",\n        \"frame\": \"string\",\n        \"start\": \"2008-12-02\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"end\": \"1960-09-01\",\n        \"val\": 5425.455871052171,\n        \"accn\": \"string\",\n        \"fy\": 7265,\n        \"fp\": \"string\",\n        \"form\": \"string\",\n        \"filed\": \"2004-07-10\",\n        \"frame\": \"string\",\n        \"start\": \"1973-12-21\"\n      },\n      {\n        \"end\": \"2002-04-02\",\n        \"val\": 4720.447046829958,\n        \"accn\": \"string\",\n        \"fy\": 7253,\n        \"fp\": \"string\",\n        \"form\": \"string\",\n        \"filed\": \"1993-03-13\",\n        \"frame\": \"string\",\n        \"start\": \"2021-06-12\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d82d609d-abdb-4f88-be70-7351f1807a97",
+              "name": "Company or concept not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "xbrl",
+                    "companyconcept",
+                    "CIK{{cik}}",
+                    ":taxonomy",
+                    "{{concept}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taxonomy",
+                      "description": "(Required) XBRL taxonomy namespace"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e82b37ec-f999-4f6c-9de9-708a416bfc2f",
+          "name": "Get all company values for a concept in a period",
+          "request": {
+            "name": "Get all company values for a concept in a period",
+            "description": {
+              "content": "Returns values for a given XBRL concept across all companies for a specific period. Useful for cross-company financial data comparisons and benchmarking.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "xbrl",
+                "frames",
+                ":taxonomy",
+                ":concept",
+                ":unit",
+                "{{period}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taxonomy",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "concept",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unit",
+                  "description": "(Required) Unit of measure (USD, shares, pure)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8df9f35e-3c4a-40ab-a33f-c462a5e06eef",
+              "name": "Cross-company values for the concept",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "xbrl",
+                    "frames",
+                    ":taxonomy",
+                    ":concept",
+                    ":unit",
+                    "{{period}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taxonomy",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "concept",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unit",
+                      "description": "(Required) Unit of measure (USD, shares, pure)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"taxonomy\": \"string\",\n  \"tag\": \"string\",\n  \"ccp\": \"string\",\n  \"uom\": \"string\",\n  \"label\": \"string\",\n  \"description\": \"string\",\n  \"pts\": 9129,\n  \"data\": [\n    {\n      \"accn\": \"string\",\n      \"cik\": 8328,\n      \"entityName\": \"string\",\n      \"loc\": \"string\",\n      \"end\": \"2002-04-02\",\n      \"val\": 6702.949430791989\n    },\n    {\n      \"accn\": \"string\",\n      \"cik\": 8438,\n      \"entityName\": \"string\",\n      \"loc\": \"string\",\n      \"end\": \"2021-03-05\",\n      \"val\": 2780.1658842956413\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://data.sec.gov",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) 10-digit CIK with leading zeros",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "cik"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) XBRL concept name (camelCase)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "concept"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) Period identifier. For annual instant: CY{year}Q{quarter}I. For annual duration: CY{year}.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "period"
+    }
+  ],
+  "info": {
+    "_postman_id": "0e68dac8-7139-4b74-8052-e19abe019ff2",
+    "name": "SEC EDGAR Submissions & Company Facts XBRL API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SEC EDGAR data APIs provide free, authenticated-free access to company filing metadata, XBRL financial data, and full-text search across all SEC submissions. APIs are hosted at data.sec.gov and efts.sec.gov and require a descriptive User-Agent header per SEC fair-access policy.\n\nContact Support:\n Name: SEC Developer Resources",
+      "type": "text/plain"
+    }
+  }
+}

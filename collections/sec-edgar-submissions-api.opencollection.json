@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SEC EDGAR & XBRL Company Facts Submissions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Submissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get company filing submission history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://data.sec.gov/submissions/CIK:cik.json",
+            "params": [
+              {
+                "name": "cik",
+                "value": "320193",
+                "type": "path",
+                "description": "10-digit Central Index Key (CIK) with leading zeros. Example: 0000320193 for Apple Inc."
+              }
+            ]
+          },
+          "docs": "Returns all filing metadata for a company identified by CIK (Central Index Key). Includes recent filings inline and older filings referenced in separate data files. Contains company metadata, SIC code, fiscal year end, and filing history."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
