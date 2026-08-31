@@ -34,7 +34,6 @@ apis:
   - Regulatory
   - SEC
   - XBRL
-  image: https://raw.githubusercontent.com/api-evangelist/sec-edgar/refs/heads/main/image.png
   humanURL: https://www.sec.gov/developer
   baseURL: https://efts.sec.gov
   properties:
