@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: SEC EDGAR Submissions & Company Facts XBRL API
   description: The SEC EDGAR data APIs provide free, authenticated-free access to company filing metadata, XBRL financial data, and full-text search across all SEC submissions. APIs are hosted at data.sec.gov and efts.sec.gov and require a descriptive User-Agent header per SEC fair-access policy.
@@ -134,33 +134,45 @@ paths:
                 $ref: '#/components/schemas/XBRLFrames'
 components:
   schemas:
-    CompanyFacts:
+    XBRLFrames:
       type: object
       properties:
-        cik:
-          type: integer
-        entityName:
+        taxonomy:
           type: string
-        facts:
-          type: object
-          description: Nested object of taxonomy > concept > unit > data
-          additionalProperties:
+        tag:
+          type: string
+        ccp:
+          type: string
+          description: Concept-currency-period identifier
+        uom:
+          type: string
+          description: Unit of measure
+        label:
+          type: string
+        description:
+          type: string
+        pts:
+          type: integer
+          description: Number of data points
+        data:
+          type: array
+          items:
             type: object
-            description: Taxonomy namespace (e.g., us-gaap, dei)
-            additionalProperties:
-              type: object
-              description: XBRL concept
-              properties:
-                label:
-                  type: string
-                description:
-                  type: string
-                units:
-                  type: object
-                  additionalProperties:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/XBRLFact'
+            properties:
+              accn:
+                type: string
+              cik:
+                type: integer
+              entityName:
+                type: string
+              loc:
+                type: string
+                description: Country/state code
+              end:
+                type: string
+                format: date
+              val:
+                type: number
     CompanyConcept:
       type: object
       properties:
@@ -214,42 +226,30 @@ components:
           type: string
           format: date
           description: Period start date (for duration facts)
-    XBRLFrames:
+    CompanyFacts:
       type: object
       properties:
-        taxonomy:
-          type: string
-        tag:
-          type: string
-        ccp:
-          type: string
-          description: Concept-currency-period identifier
-        uom:
-          type: string
-          description: Unit of measure
-        label:
-          type: string
-        description:
-          type: string
-        pts:
+        cik:
           type: integer
-          description: Number of data points
-        data:
-          type: array
-          items:
+        entityName:
+          type: string
+        facts:
+          type: object
+          description: Nested object of taxonomy > concept > unit > data
+          additionalProperties:
             type: object
-            properties:
-              accn:
-                type: string
-              cik:
-                type: integer
-              entityName:
-                type: string
-              loc:
-                type: string
-                description: Country/state code
-              end:
-                type: string
-                format: date
-              val:
-                type: number
+            description: Taxonomy namespace (e.g., us-gaap, dei)
+            additionalProperties:
+              type: object
+              description: XBRL concept
+              properties:
+                label:
+                  type: string
+                description:
+                  type: string
+                units:
+                  type: object
+                  additionalProperties:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/XBRLFact'
